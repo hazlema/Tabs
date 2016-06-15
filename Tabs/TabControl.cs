@@ -1,9 +1,12 @@
 ﻿using System.Windows.Forms;
 using System.Drawing;
+using System.ComponentModel;
 
 namespace Tabs {
     class TabControl : PictureBox {
         public delegate void TabControlClickHandler(object source, string key);
+
+        [Browsable(true)]
         public event TabControlClickHandler TabControlClick;
 
         public TabControl() {
@@ -14,24 +17,43 @@ namespace Tabs {
         }
 
         // Properties
-        public Color LineColor     { get; set; } = Color.FromArgb(255, 120, 150, 240);
-        public Color btnMouseDown  { get; set; } = Color.FromArgb(255, 80, 80, 80);
-        public Color btnMouseOver  { get; set; } = Color.FromArgb(255, 60, 60, 60);
-        public Color btnForeground { get; set; } = Color.FromArgb(255, 255, 255, 255);
-        public Color btnSeleced    { get; set; } = Color.FromArgb(255, 60, 60, 60);
-        public Font  btnFont       { get; set; } = new Font("Segoe UI", 10);
-        public bool  useAsMenu     { get; set; } = false;
+        public Color LineColor       { get; set; } = Color.FromArgb(255, 120, 150, 240);
+        public Color btnMouseDown    { get; set; } = Color.FromArgb(255, 80, 80, 80);
+        public Color btnMouseOver    { get; set; } = Color.FromArgb(255, 60, 60, 60);
+        public Color btnForeground   { get; set; } = Color.FromArgb(255, 255, 255, 255);
+        public Color btnSeleced      { get; set; } = Color.FromArgb(255, 60, 60, 60);
+        public Font  btnFont         { get; set; } = new Font("Segoe UI", 10);
+        public bool  useAsMenu       { get; set; } = false;
 
         private int savedHeight = 30;
 
         // Add a tab
-        public void Add(TabButton btn) {
+        public TabControl Add(string[] names) {
+            foreach (string name in names) {
+                Add(new TabButton(name));
+            }
+
+            return this;
+        }
+        public TabControl Add(string name) {
+            Add(new TabButton(name));
+
+            return this;
+        }
+        public TabControl Add(string name, string key) {
+            Add(new TabButton(name, key));
+
+            return this;
+        }
+        public TabControl Add(TabButton btn) {
             btn.Click += Btn_TabClick;     // Add the event
             Controls.Add(btn);             // Add the button
             alignButtons();                // Line em' up
             setColors();                   // Enforce Colors
 
             if (savedHeight < btn.Height) savedHeight = btn.Height;
+
+            return this;
         }
 
         // Remove by name
@@ -72,13 +94,13 @@ namespace Tabs {
         }
 
         // Set the active tab
-        public void selectTab(string key) {
+        public void Select(string key) {
             if (Controls.ContainsKey(key)) {
                 int index = Controls.IndexOfKey(key);
-                selectTab((TabButton)Controls[index]);
+                Select((TabButton)Controls[index]);
             }
         }
-        public void selectTab(TabButton tab) {
+        public void Select(TabButton tab) {
             setColors();
 
             tab.BackColor = btnSeleced;
@@ -94,7 +116,7 @@ namespace Tabs {
             TabButton tab = (TabButton)source;
 
             if (!useAsMenu) {
-                selectTab(tab);
+                Select(tab);
             } else {
                 if (TabControlClick != null) TabControlClick(tab, tab.Name);
             }

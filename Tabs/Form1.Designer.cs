@@ -34,9 +34,9 @@
             this.txtLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtLabel.Font = new System.Drawing.Font("Verdana", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtLabel.ForeColor = System.Drawing.Color.White;
-            this.txtLabel.Location = new System.Drawing.Point(0, 29);
+            this.txtLabel.Location = new System.Drawing.Point(0, 33);
             this.txtLabel.Name = "txtLabel";
-            this.txtLabel.Size = new System.Drawing.Size(433, 112);
+            this.txtLabel.Size = new System.Drawing.Size(433, 108);
             this.txtLabel.TabIndex = 1;
             this.txtLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -52,10 +52,11 @@
             this.tabControl1.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(150)))), ((int)(((byte)(240)))));
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
-            this.tabControl1.Size = new System.Drawing.Size(433, 29);
-            this.tabControl1.TabIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(433, 33);
+            this.tabControl1.TabIndex = 2;
             this.tabControl1.TabStop = false;
             this.tabControl1.useAsMenu = false;
+            this.tabControl1.TabControlClick += new Tabs.TabControl.TabControlClickHandler(this.TabControl1_TabControlClick);
             // 
             // Form1
             // 
@@ -73,9 +74,8 @@
         }
 
         #endregion
-
-        private TabControl tabControl1;
         private System.Windows.Forms.Label txtLabel;
+        private TabControl tabControl1;
     }
 }
 
