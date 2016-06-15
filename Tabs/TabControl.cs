@@ -19,6 +19,7 @@ namespace Tabs {
         public Color btnMouseOver  { get; set; } = Color.FromArgb(255, 60, 60, 60);
         public Color btnForeground { get; set; } = Color.FromArgb(255, 255, 255, 255);
         public Color btnSeleced    { get; set; } = Color.FromArgb(255, 60, 60, 60);
+        public Font  btnFont       { get; set; } = new Font("Segoe UI", 10);
         public bool  useAsMenu     { get; set; } = false;
 
         private int savedHeight = 30;
@@ -45,7 +46,7 @@ namespace Tabs {
 
             foreach (Control btn in Controls) {
                 btn.Left = lastPosition;
-                btn.Height = this.Height;
+                btn.Height = savedHeight;
 
                 lastPosition += btn.Width;
             }
@@ -61,10 +62,11 @@ namespace Tabs {
         // Colorize the buttons
         public void setColors() {
             foreach (TabButton t in Controls) {
+                t.Font = btnFont;
                 t.FlatAppearance.MouseDownBackColor = btnMouseDown;
                 t.FlatAppearance.MouseOverBackColor = btnMouseOver;
                 t.ForeColor = btnForeground;
-                t.BackColor = this.BackColor;
+                t.BackColor = Color.Transparent;
                 t.Cursor = Cursors.Hand;
             }
         }
