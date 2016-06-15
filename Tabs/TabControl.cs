@@ -57,9 +57,28 @@ namespace Tabs {
         }
 
         // Remove by name
-        public void Remove(string key) {
+        public TabControl Remove(string key) {
             if (Controls.ContainsKey(key)) Controls.RemoveByKey(key);
             alignButtons();                // Line em' up
+            return this;
+        }
+
+        // Set the active tab
+        public void Select(string key) {
+            if (Controls.ContainsKey(key)) {
+                int index = Controls.IndexOfKey(key);
+                Select((TabButton)Controls[index]);
+            }
+        }
+        public void Select(TabButton tab) {
+            setColors();
+
+            tab.BackColor = btnSeleced;
+            tab.FlatAppearance.MouseDownBackColor = btnSeleced;
+            tab.FlatAppearance.MouseOverBackColor = btnSeleced;
+            tab.Cursor = Cursors.Arrow;
+
+            if (TabControlClick != null) TabControlClick(tab, tab.Name);
         }
 
         // Line up the buttons and make sure they are the same height
@@ -82,7 +101,7 @@ namespace Tabs {
         }
 
         // Colorize the buttons
-        public void setColors() {
+        private void setColors() {
             foreach (TabButton t in Controls) {
                 t.Font = btnFont;
                 t.FlatAppearance.MouseDownBackColor = btnMouseDown;
@@ -91,24 +110,6 @@ namespace Tabs {
                 t.BackColor = Color.Transparent;
                 t.Cursor = Cursors.Hand;
             }
-        }
-
-        // Set the active tab
-        public void Select(string key) {
-            if (Controls.ContainsKey(key)) {
-                int index = Controls.IndexOfKey(key);
-                Select((TabButton)Controls[index]);
-            }
-        }
-        public void Select(TabButton tab) {
-            setColors();
-
-            tab.BackColor = btnSeleced;
-            tab.FlatAppearance.MouseDownBackColor = btnSeleced;
-            tab.FlatAppearance.MouseOverBackColor = btnSeleced;
-            tab.Cursor = Cursors.Arrow;
-
-            if (TabControlClick != null) TabControlClick(tab, tab.Name);
         }
 
         // Tab Clicked Event
