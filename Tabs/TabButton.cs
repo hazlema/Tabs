@@ -1,15 +1,20 @@
-﻿using System.Windows.Forms;
-using System.Drawing;
+﻿using System.Drawing;
+using System;
+using System.Windows.Forms;
 
 namespace Tabs {
+    [Serializable]
     class TabButton : Button {
-
         public void init() {
             FlatStyle = FlatStyle.Flat;
             FlatAppearance.BorderSize = 0;
             Cursor = Cursors.Hand;
             TextAlign = ContentAlignment.MiddleCenter;
             AutoSize = true;
+        }
+
+        public TabButton() {
+            init();
         }
 
         public TabButton(string tabTitle) {

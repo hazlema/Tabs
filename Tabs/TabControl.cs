@@ -1,8 +1,11 @@
-﻿using System.Windows.Forms;
+﻿using System;
 using System.Drawing;
+using System.Windows.Forms;
 using System.ComponentModel;
 
 namespace Tabs {
+    [Serializable]
+    [TypeConverter(typeof(ExpandableObjectConverter))]
     class TabControl : PictureBox {
         public delegate void TabControlClickHandler(object source, string key);
 
@@ -17,15 +20,31 @@ namespace Tabs {
         }
 
         // Properties
-        public Color LineColor       { get; set; } = Color.FromArgb(255, 120, 150, 240);
         public Color btnMouseDown    { get; set; } = Color.FromArgb(255, 80, 80, 80);
         public Color btnMouseOver    { get; set; } = Color.FromArgb(255, 60, 60, 60);
         public Color btnForeground   { get; set; } = Color.FromArgb(255, 255, 255, 255);
         public Color btnSeleced      { get; set; } = Color.FromArgb(255, 60, 60, 60);
         public Font  btnFont         { get; set; } = new Font("Segoe UI", 10);
         public bool  useAsMenu       { get; set; } = false;
-
         private int savedHeight = 30;
+
+        // Had to for design time support
+        private string[] tabs;
+        public string[] Tabs {
+            get { return tabs; }
+            set { tabs = value;
+                  RenderTabs();
+            }
+        }
+
+        // Had to for design time support
+        private Color linecolor = Color.FromArgb(255, 120, 150, 240);
+        public Color LineColor {
+            get { return linecolor; }
+            set { linecolor = value;
+                  Invalidate();
+            }
+        }
 
         // Add a tab
         public TabControl Add(string[] names) {
@@ -34,7 +53,7 @@ namespace Tabs {
             }
 
             return this;
-        }
+        } 
         public TabControl Add(string name) {
             Add(new TabButton(name));
 
@@ -70,6 +89,8 @@ namespace Tabs {
                 Select((TabButton)Controls[index]);
             }
         }
+
+        // Select Tab
         public void Select(TabButton tab) {
             setColors();
 
@@ -94,8 +115,15 @@ namespace Tabs {
             this.Height = savedHeight + 1;
         }
 
+        // Design Time workaround
+        private void RenderTabs() {
+            Controls.Clear();
+            foreach (string tabs in Tabs) Add(tabs);
+        }
+
         // Add the stylish line
         private void TabControl_Paint(object sender, PaintEventArgs e) {
+                
             e.Graphics.DrawRectangle(new Pen(LineColor, 1), 
                 new Rectangle(0, this.Height - 1, this.Width, this.Height));
         }

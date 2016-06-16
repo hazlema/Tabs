@@ -1,27 +1,24 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 
 namespace Tabs {
+    [Serializable]
     public partial class Form1 : Form {
         private TabControl TabCtrl = new TabControl();
 
         public Form1() {
             InitializeComponent();
-
-            // Selecting a tab will fire the event
-            tabControl1.Add(new string[] {
-                "Home",
-                "Add",
-                "Remove",
-                "Twitter",
-                "Facebook"
-            }).Select("Home"); 
         }
 
         private void TabControl1_TabControlClick(object source, string key) {
-            txtLabel.Text = key;
+            TabSelected.Text = key;
+        }
 
-            if (key == "Remove") tabControl1.Remove("Remove").Select("Home");
-            if (key == "Add")    tabControl1.Add("New");
+        private void Clock_Tick(object sender, System.EventArgs e) {
+        }
+
+        private void Form1_Load(object sender, EventArgs e) {
+            tabControl1.Select("Clock"); // Selecting a tab will fire the event
         }
     }
 }
