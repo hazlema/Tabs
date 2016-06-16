@@ -13,8 +13,7 @@
         private void TabControl1_TabControlClick(object source, string key) {
             txtLabel.Text = key;
 
-            if (key == "Remove") tabControl1.Remove("Remove");
+            if (key == "Remove") tabControl1.Remove("Remove").Select("Home");
             if (key == "Add")    tabControl1.Add("New");
         }
-  
   
