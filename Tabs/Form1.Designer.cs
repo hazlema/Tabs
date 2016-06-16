@@ -26,8 +26,8 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.Clock = new System.Windows.Forms.Timer(this.components);
-            this.tabControl1 = new Tabs.TabControl();
             this.TabSelected = new System.Windows.Forms.Label();
+            this.tabControl1 = new Tabs.TabControl();
             ((System.ComponentModel.ISupportInitialize)(this.tabControl1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -36,6 +36,17 @@
             this.Clock.Enabled = true;
             this.Clock.Interval = 1000;
             this.Clock.Tick += new System.EventHandler(this.Clock_Tick);
+            // 
+            // TabSelected
+            // 
+            this.TabSelected.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TabSelected.Font = new System.Drawing.Font("Segoe UI", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TabSelected.ForeColor = System.Drawing.Color.White;
+            this.TabSelected.Location = new System.Drawing.Point(0, 31);
+            this.TabSelected.Name = "TabSelected";
+            this.TabSelected.Size = new System.Drawing.Size(502, 110);
+            this.TabSelected.TabIndex = 3;
+            this.TabSelected.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // tabControl1
             // 
@@ -60,17 +71,6 @@
             this.tabControl1.TabStop = false;
             this.tabControl1.useAsMenu = false;
             this.tabControl1.TabControlClick += new Tabs.TabControl.TabControlClickHandler(this.TabControl1_TabControlClick);
-            // 
-            // TabSelected
-            // 
-            this.TabSelected.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TabSelected.Font = new System.Drawing.Font("Segoe UI", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TabSelected.ForeColor = System.Drawing.Color.White;
-            this.TabSelected.Location = new System.Drawing.Point(0, 31);
-            this.TabSelected.Name = "TabSelected";
-            this.TabSelected.Size = new System.Drawing.Size(502, 110);
-            this.TabSelected.TabIndex = 3;
-            this.TabSelected.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Form1
             // 

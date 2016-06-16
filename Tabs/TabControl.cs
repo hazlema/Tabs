@@ -9,9 +9,6 @@ namespace Tabs {
     class TabControl : PictureBox {
         public delegate void TabControlClickHandler(object source, string key);
 
-        [Browsable(true)]
-        public event TabControlClickHandler TabControlClick;
-
         public TabControl() {
             this.Dock = DockStyle.Top;
             this.BackColor = Color.FromArgb(255, 40, 40, 40);
@@ -19,17 +16,36 @@ namespace Tabs {
             this.Paint += TabControl_Paint;
         }
 
-        // Properties
-        public Color btnMouseDown    { get; set; } = Color.FromArgb(255, 80, 80, 80);
-        public Color btnMouseOver    { get; set; } = Color.FromArgb(255, 60, 60, 60);
-        public Color btnForeground   { get; set; } = Color.FromArgb(255, 255, 255, 255);
-        public Color btnSeleced      { get; set; } = Color.FromArgb(255, 60, 60, 60);
-        public Font  btnFont         { get; set; } = new Font("Segoe UI", 10);
-        public bool  useAsMenu       { get; set; } = false;
         private int savedHeight = 30;
 
-        // Had to for design time support
+        // Design time support
         private string[] tabs;
+        private Color linecolor = Color.FromArgb(255, 120, 150, 240);
+
+        // Events
+        [Browsable(true)]
+        public event TabControlClickHandler TabControlClick;
+
+        // Public Properties
+        [Description("Tabs mouse down color"), Category("Tabs")]
+        public Color btnMouseDown    { get; set; } = Color.FromArgb(255, 80, 80, 80);
+
+        [Description("Tabs mouse over color"), Category("Tabs")]
+        public Color btnMouseOver    { get; set; } = Color.FromArgb(255, 60, 60, 60);
+
+        [Description("Tabs foreground color"), Category("Tabs")]
+        public Color btnForeground   { get; set; } = Color.FromArgb(255, 255, 255, 255);
+
+        [Description("Tabs selected background color"), Category("Tabs")]
+        public Color btnSeleced      { get; set; } = Color.FromArgb(255, 60, 60, 60);
+
+        [Description("Tabs Font"), Category("Tabs")]
+        public Font  btnFont         { get; set; } = new Font("Segoe UI", 10);
+
+        [Description("Tabs use as menu"), Category("Tabs")]
+        public bool  useAsMenu       { get; set; } = false;
+
+        [Description("Tabs Collection"), Category("Tabs")]
         public string[] Tabs {
             get { return tabs; }
             set { tabs = value;
@@ -37,8 +53,7 @@ namespace Tabs {
             }
         }
 
-        // Had to for design time support
-        private Color linecolor = Color.FromArgb(255, 120, 150, 240);
+        [Description("Tabs line color"), Category("Tabs")]
         public Color LineColor {
             get { return linecolor; }
             set { linecolor = value;
@@ -115,7 +130,7 @@ namespace Tabs {
             this.Height = savedHeight + 1;
         }
 
-        // Design Time workaround
+        // Design Time support
         private void RenderTabs() {
             Controls.Clear();
             foreach (string tabs in Tabs) Add(tabs);
