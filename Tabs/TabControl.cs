@@ -14,6 +14,7 @@ namespace Tabs {
             this.BackColor = Color.FromArgb(255, 40, 40, 40);
             this.BorderStyle = BorderStyle.None;
             this.Paint += TabControl_Paint;
+            this.VisibleChanged += TabControl_VisibleChanged;
         }
 
         private int savedHeight = 30;
@@ -54,8 +55,8 @@ namespace Tabs {
             }
         }
 
-        private string activetab = "0";
-        [Description("Set the active tab. (Can be by tab name or index number)"), Category("Tabs")]
+        private string activetab = "";
+        [Description("Set the active tab. (0 for none, tab name or index number (1 and up)"), Category("Tabs")]
         public string activeTab {
             get {
                 Select(this.activetab);
@@ -111,23 +112,34 @@ namespace Tabs {
         }
 
         // Set the active tab
-        public void Select(string key) {
+        public TabButton Select(string key) {
             int ndx = 0;
             bool isNum = int.TryParse(key, out ndx);
 
-            if (isNum) {
-                if (ndx < Controls.Count)
-                    Select((TabButton)Controls[ndx]);
+            if (key == "") {
+                setColors();
             } else {
-                if (Controls.ContainsKey(key)) {
-                    int index = Controls.IndexOfKey(key);
-                    Select((TabButton)Controls[index]);
+                if (isNum) {
+                    if (ndx == 0) {
+                        setColors();
+                    } else {
+                        if (ndx <= Controls.Count) {
+                            return Select((TabButton)Controls[ndx - 1]); ;
+                        } else {
+                            if (Controls.ContainsKey(key)) {
+                                int index = Controls.IndexOfKey(key);
+                                return Select((TabButton)Controls[index]);
+                            }
+                        }
+                    }
                 }
             }
+
+            return null;
         }
 
         // Select Tab
-        public void Select(TabButton tab) {
+        public TabButton Select(TabButton tab) {
             setColors();
 
             tab.BackColor = btnSeleced;
@@ -136,6 +148,7 @@ namespace Tabs {
             tab.Cursor = Cursors.Arrow;
 
             if (TabControlClick != null) TabControlClick(tab, tab.Name);
+            return tab;
         }
 
         // Line up the buttons and make sure they are the same height
@@ -155,7 +168,6 @@ namespace Tabs {
         private void RenderTabs() {
             Controls.Clear();
             foreach (string tabs in Tabs) Add(tabs);
-            Select(activetab);
         }
 
         // Add the stylish line
@@ -185,6 +197,11 @@ namespace Tabs {
             } else {
                 if (TabControlClick != null) TabControlClick(tab, tab.Name);
             }
+        }
+
+        // Fire Event when rendering control for real
+        private void TabControl_VisibleChanged(object sender, EventArgs e) {
+            Select(activeTab);
         }
     }
 }

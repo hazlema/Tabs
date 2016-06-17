@@ -38,19 +38,20 @@
             this.TabSelected.Name = "TabSelected";
             this.TabSelected.Size = new System.Drawing.Size(502, 110);
             this.TabSelected.TabIndex = 3;
+            this.TabSelected.Text = "Empty";
             this.TabSelected.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // tabControl1
             // 
-            this.tabControl1.activeTab = "Timer";
+            this.tabControl1.activeTab = "1";
             this.tabControl1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            this.tabControl1.btnFont = new System.Drawing.Font("Segoe UI", 10F);
+            this.tabControl1.btnFont = new System.Drawing.Font("Toolbox Std", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabControl1.btnForeground = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.tabControl1.btnMouseDown = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
             this.tabControl1.btnMouseOver = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
             this.tabControl1.btnSeleced = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tabControl1.LineColor = System.Drawing.Color.Red;
+            this.tabControl1.LineColor = System.Drawing.SystemColors.ActiveCaption;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.Size = new System.Drawing.Size(502, 31);
