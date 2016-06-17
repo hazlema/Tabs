@@ -13,15 +13,17 @@ Properties:<br>
 - public string[] Tabs // Tab Names
 - public string TabActive // Active Tab
 - public Color TabLineColor // Line Color
-<br>
+<br><br>
 Events:<br>
 - public event TabControlSelectedHandler TabControlSelected;
-<br>
+<br><br><br>
 Code Examples:<br>
 - Activate a tab
+
                 tabControl1.Select(Tab Name);
-<br>
+<br><br>
 - Create tabs programmiticlly:
+
             // Selecting a tab will fire the event
             tabControl1.Add(new string[] {
                 "Home",
@@ -30,8 +32,9 @@ Code Examples:<br>
                 "Twitter",
                 "Facebook"
             }).Select("Home"); 
-<br>
+<br><br>
 - Event, Create during design time or be a pro :-)
+
         private void TabControl1_TabControlSelected(object source, string key) {
             txtLabel.Text = key;
 
