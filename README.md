@@ -14,14 +14,15 @@ Properties:<br>
 - public string TabActive // Active Tab
 - public Color TabLineColor // Line Color
 
-Events:<br>
+Events:
 - public event TabControlSelectedHandler TabControlSelected;
-<br><br><br>
+
 Code Examples:<br>
 - Activate a tab
 
                 tabControl1.Select(Tab Name);
-<br><br>
+
+
 - Create tabs programmiticlly:
 
             // Selecting a tab will fire the event
