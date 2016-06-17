@@ -42,7 +42,7 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.activeTab = "Help";
+            this.tabControl1.activeTab = "Timer";
             this.tabControl1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.tabControl1.btnFont = new System.Drawing.Font("Segoe UI", 10F);
             this.tabControl1.btnForeground = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));

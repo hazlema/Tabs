@@ -42,7 +42,7 @@ namespace Tabs {
         [Description("Tabs Font"), Category("Tabs")]
         public Font  btnFont         { get; set; } = new Font("Segoe UI", 10);
 
-        [Description("Tabs use as menu"), Category("Tabs")]
+        [Description("Tabs use as menu (sticky backgrounds)"), Category("Tabs")]
         public bool  useAsMenu       { get; set; } = false;
 
         [Description("Tabs Collection"), Category("Tabs")]
@@ -54,8 +54,8 @@ namespace Tabs {
             }
         }
 
-        private string activetab = "";
-        [Description("Tabs Collection"), Category("Tabs")]
+        private string activetab = "0";
+        [Description("Set the active tab. (Can be by tab name or index number)"), Category("Tabs")]
         public string activeTab {
             get {
                 Select(this.activetab);
@@ -112,9 +112,17 @@ namespace Tabs {
 
         // Set the active tab
         public void Select(string key) {
-            if (Controls.ContainsKey(key)) {
-                int index = Controls.IndexOfKey(key);
-                Select((TabButton)Controls[index]);
+            int ndx = 0;
+            bool isNum = int.TryParse(key, out ndx);
+
+            if (isNum) {
+                if (ndx < Controls.Count)
+                    Select((TabButton)Controls[ndx]);
+            } else {
+                if (Controls.ContainsKey(key)) {
+                    int index = Controls.IndexOfKey(key);
+                    Select((TabButton)Controls[index]);
+                }
             }
         }
 
