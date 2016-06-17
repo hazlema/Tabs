@@ -34,9 +34,9 @@
             this.TabSelected.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TabSelected.Font = new System.Drawing.Font("Verdana", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TabSelected.ForeColor = System.Drawing.Color.White;
-            this.TabSelected.Location = new System.Drawing.Point(0, 45);
+            this.TabSelected.Location = new System.Drawing.Point(0, 38);
             this.TabSelected.Name = "TabSelected";
-            this.TabSelected.Size = new System.Drawing.Size(502, 96);
+            this.TabSelected.Size = new System.Drawing.Size(502, 103);
             this.TabSelected.TabIndex = 3;
             this.TabSelected.Text = "Empty";
             this.TabSelected.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -48,15 +48,15 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.Padding = new System.Windows.Forms.Padding(35);
-            this.tabControl1.Size = new System.Drawing.Size(502, 45);
+            this.tabControl1.Size = new System.Drawing.Size(502, 38);
             this.tabControl1.TabActive = "1";
-            this.tabControl1.TabFont = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tabControl1.TabFont = new System.Drawing.Font("Adobe Gothic Std B", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.tabControl1.TabForeground = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.tabControl1.TabIndex = 2;
             this.tabControl1.TabLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(176)))), ((int)(((byte)(203)))), ((int)(((byte)(241)))));
             this.tabControl1.TabMouseDown = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
             this.tabControl1.TabMouseOver = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
-            this.tabControl1.TabPadding = new System.Windows.Forms.Padding(10);
+            this.tabControl1.TabPadding = new System.Windows.Forms.Padding(5);
             this.tabControl1.Tabs = new string[] {
         "Clock",
         "Alarms",
@@ -82,6 +82,7 @@
             this.Name = "Form1";
             this.Text = "Simple Clock";
             this.TopMost = true;
+            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.tabControl1)).EndInit();
             this.ResumeLayout(false);
 

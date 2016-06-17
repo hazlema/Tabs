@@ -4,24 +4,8 @@ using System.Windows.Forms;
 using System.ComponentModel;
 
 namespace Tabs {
-    [Serializable]
-    [TypeConverter(typeof(ExpandableObjectConverter))]
     class TabControl : PictureBox {
         public delegate void TabControlSelectedHandler(object source, string key);
-
-        public TabControl() {
-            this.Dock = DockStyle.Top;
-            this.BackColor = Color.FromArgb(255, 40, 40, 40);
-            this.BorderStyle = BorderStyle.None;
-
-            this.Paint += TabControl_Paint;
-            this.VisibleChanged += TabControl_VisibleChanged;
-            this.Resize += TabControl_Resize;
-        }
-
-        // Design time support
-        private string[] tabs;
-        private Color linecolor = Color.FromArgb(255, 120, 150, 240);
 
         // Events
         [Browsable(true)]
@@ -45,25 +29,42 @@ namespace Tabs {
             }
             set {
                 btnpadding = value;
-                alignButtons();
+                updateAll();
             }
         }
 
         [Description("Tabs selected background color"), Category("Tabs")]
         public Color TabSeleced { get; set; } = Color.FromArgb(255, 60, 60, 60);
 
+        public Font tabFont = new Font("Segoe UI", 10);
         [Description("Tabs Font"), Category("Tabs")]
-        public Font TabFont { get; set; } = new Font("Segoe UI", 10);
+        public Font TabFont {
+            get {
+                return tabFont;
+            }
+            set {
+                tabFont = value;
+                updateAll();
+            }
+        }
 
+        private bool tabstickybackgrounds = true;
         [Description("Tabs remember selected (sticky backgrounds)"), Category("Tabs")]
-        public bool TabStickyBackgrounds { get; set; } = true;
+        public bool TabStickyBackgrounds {
+            get { return tabstickybackgrounds; }
+            set { tabstickybackgrounds = value;
+                  updateAll();
+            }
+        }
 
+        private string[] tabs;
         [Description("Tabs Collection"), Category("Tabs")]
         public string[] Tabs {
             get { return tabs; }
             set {
                 tabs = value;
-                RenderTabs();
+                renderTabs();
+                updateAll();
             }
         }
 
@@ -75,16 +76,29 @@ namespace Tabs {
                 return activetab; }
             set {
                 activetab = value;
-                Select(this.activetab);
+                updateAll();
             }
         }
 
+        private Color linecolor = Color.FromArgb(255, 120, 150, 240);
         [Description("Tabs line color"), Category("Tabs")]
         public Color TabLineColor {
             get { return linecolor; }
             set { linecolor = value;
+                updateAll();
                 Invalidate();
             }
+        }
+
+        // Constructor
+        public TabControl() {
+            this.Dock = DockStyle.Top;
+            this.BackColor = Color.FromArgb(255, 40, 40, 40);
+            this.BorderStyle = BorderStyle.None;
+
+            this.Paint += onPaint;
+            this.VisibleChanged += onVisibleChanged;
+            this.Resize += onResize;
         }
 
         // Add a tab
@@ -106,7 +120,7 @@ namespace Tabs {
             return this;
         }
         public TabControl Add(TabButton btn) {
-            btn.Click += Btn_TabClick;     // Add the event
+            btn.Click += onClick;          // Add the event
             Controls.Add(btn);             // Add the button
             alignButtons();                // Line em' up
             setColors();                   // Enforce Colors
@@ -121,7 +135,27 @@ namespace Tabs {
             return this;
         }
 
-        // Set the active tab
+        // Update Everything
+        private void updateAll() {
+            setColors();
+            alignButtons();
+            Select(TabActive);
+        }
+
+        // Colorize the buttons
+        private void setColors() {
+            foreach (TabButton t in Controls) {
+                t.Font = TabFont;
+                t.Padding = TabPadding;
+                t.FlatAppearance.MouseDownBackColor = TabMouseDown;
+                t.FlatAppearance.MouseOverBackColor = TabMouseOver;
+                t.ForeColor = TabForeground;
+                t.BackColor = Color.Transparent;
+                t.Cursor = Cursors.Hand;
+            }
+        }
+
+        // Select Tab
         public TabButton Select(string key) {
             int ndx = 0;
             bool isNum = int.TryParse(key, out ndx);
@@ -147,8 +181,6 @@ namespace Tabs {
 
             return null;
         }
-
-        // Select Tab
         public TabButton Select(TabButton tab) {
             setColors();
 
@@ -165,57 +197,43 @@ namespace Tabs {
             int lastleft = 0;
             int tallest = 0;
 
+            // Populate with the changes
             foreach (Control btn in Controls) {
                 btn.Padding = btnpadding;
                 btn.AutoSize = false;
                 btn.Height = 0;
                 btn.AutoSize = true;
-
-                btn.Left = lastleft;
-                lastleft += btn.Width;
-
                 if (tallest < btn.Height) tallest = btn.Height;
             }
 
+            // Line them up
             foreach (Control btn in Controls) {
+                btn.Left = lastleft;
                 btn.Height = tallest;
-            }
+                lastleft += btn.Width;
 
+            }
 
             if (tallest == 0)
                 Height = 30 + 2;
             else
                 Height = tallest + 2;
-
         }
 
         // Design Time support
-        private void RenderTabs() {
+        private void renderTabs() {
             Controls.Clear();
             foreach (string tabs in Tabs) Add(tabs);
         }
 
         // Add the stylish line
-        private void TabControl_Paint(object sender, PaintEventArgs e) {
-            e.Graphics.DrawRectangle(new Pen(TabLineColor, 1), 
+        private void onPaint(object sender, PaintEventArgs e) {
+            e.Graphics.DrawRectangle(new Pen(TabLineColor, 1),
                 new Rectangle(0, this.Height - 2, this.Width, this.Height));
         }
 
-        // Colorize the buttons
-        private void setColors() {
-            foreach (TabButton t in Controls) {
-                t.Font = TabFont;
-                t.Padding = TabPadding;
-                t.FlatAppearance.MouseDownBackColor = TabMouseDown;
-                t.FlatAppearance.MouseOverBackColor = TabMouseOver;
-                t.ForeColor = TabForeground;
-                t.BackColor = Color.Transparent;
-                t.Cursor = Cursors.Hand;
-            }
-        }
-
         // Tab Clicked Event
-        private void Btn_TabClick(object source, System.EventArgs args) {
+        private void onClick(object source, System.EventArgs args) {
             TabButton tab = (TabButton)source;
 
             if (TabStickyBackgrounds) Select(tab);
@@ -223,15 +241,15 @@ namespace Tabs {
         }
 
         // Fire Event when rendering control for real
-        private void TabControl_VisibleChanged(object sender, EventArgs e) {
+        private void onVisibleChanged(object sender, EventArgs e) {
             if (TabStickyBackgrounds) {
                 TabButton t = Select(TabActive);
                 if (t != null && TabControlSelected != null) TabControlSelected(t, t.Name);
             }
         }
 
-        private void TabControl_Resize(object sender, EventArgs e) {
-            alignButtons();
+        private void onResize(object sender, EventArgs e) {
+            updateAll();
         }
     }
 }

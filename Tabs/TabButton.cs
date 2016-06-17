@@ -3,10 +3,12 @@ using System.Drawing;
 using System.Windows.Forms;
 
 namespace Tabs {
-    [Serializable]
     class TabButton : Button {
 
         // This is just a regular button
+        // And we set some of its properties
+        // so we can create a bunch of buttons and 
+        // avoid having to set each one.
 
         public void init() {
             FlatStyle = FlatStyle.Flat;
