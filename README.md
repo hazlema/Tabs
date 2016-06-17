@@ -23,7 +23,7 @@ Code Examples:<br>
                 tabControl1.Select(Tab Name);
 
 
-- Create tabs programmiticlly:
+- Create tabs manually
 
             // Selecting a tab will fire the event
             tabControl1.Add(new string[] {
@@ -34,7 +34,7 @@ Code Examples:<br>
                 "Facebook"
             }).Select("Home"); 
 
-- Event, Create during design time or be a pro :-)
+- Event, Create during design time
 
         private void TabControl1_TabControlSelected(object source, string key) {
             txtLabel.Text = key;
