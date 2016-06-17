@@ -1,12 +1,27 @@
 # Tabs
 ![alt text](https://raw.githubusercontent.com/hazlema/Tabs/master/Tabs/Tabs.png "TabControl")
 
-Activate a tab<br>
-
+This control has full design time support!<br><br>
+Properties:<br>
+- public Color TabMouseDown = Color.FromArgb(255, 80, 80, 80); // Tab Color when Click
+- public Color TabMouseOver = Color.FromArgb(255, 60, 60, 60); // Hover Color
+- public Color TabForeground = Color.FromArgb(255, 255, 255, 255);  // Text Color
+- public Padding TabPadding = new Padding(0);  // Change button looks
+- public Color TabSeleced = Color.FromArgb(255, 60, 60, 60); // Background of selected tab (Sticky Backgrounds)
+- public Font TabFont = new Font("Segoe UI", 10);  // Font
+- public bool TabStickyBackgrounds = true; // Tab like -or- Menu like
+- public string[] Tabs // Tab Names
+- public string TabActive // Active Tab
+- public Color TabLineColor // Line Color
+<br>
+Events:<br>
+- public event TabControlSelectedHandler TabControlSelected;
+<br>
+Code Examples:<br>
+- Activate a tab
                 tabControl1.Select(Tab Name);
-
-You can add tabs and such all in design time.  However, if you want to write code, below is how to create several tabs and select one as active.<br>
-
+<br>
+- Create tabs programmiticlly:
             // Selecting a tab will fire the event
             tabControl1.Add(new string[] {
                 "Home",
@@ -15,10 +30,9 @@ You can add tabs and such all in design time.  However, if you want to write cod
                 "Twitter",
                 "Facebook"
             }).Select("Home"); 
-  
-Event, Create during design time or be a pro :-)<br>
-
-        private void TabControl1_TabControlClick(object source, string key) {
+<br>
+- Event, Create during design time or be a pro :-)
+        private void TabControl1_TabControlSelected(object source, string key) {
             txtLabel.Text = key;
 
             if (key == "Remove") tabControl1.Remove("Remove").Select("Home");
