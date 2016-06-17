@@ -13,7 +13,7 @@ Properties:<br>
 - public string[] Tabs // Tab Names
 - public string TabActive // Active Tab
 - public Color TabLineColor // Line Color
-<br><br>
+
 Events:<br>
 - public event TabControlSelectedHandler TabControlSelected;
 <br><br><br>
@@ -32,7 +32,7 @@ Code Examples:<br>
                 "Twitter",
                 "Facebook"
             }).Select("Home"); 
-<br><br>
+
 - Event, Create during design time or be a pro :-)
 
         private void TabControl1_TabControlSelected(object source, string key) {
