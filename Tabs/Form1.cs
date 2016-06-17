@@ -11,8 +11,9 @@ namespace Tabs {
             InitializeComponent();
         }
 
-        private void TabControl1_TabControlClick(object source, string key) {
+        private void isSelected(object source, string key) {
             TabSelected.Text = key;
+            Debug.WriteLine($"Event Fired for '{key}'");
         }
     }
 }
