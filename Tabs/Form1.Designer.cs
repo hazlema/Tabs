@@ -23,19 +23,11 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.Clock = new System.Windows.Forms.Timer(this.components);
             this.TabSelected = new System.Windows.Forms.Label();
             this.tabControl1 = new Tabs.TabControl();
             ((System.ComponentModel.ISupportInitialize)(this.tabControl1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // Clock
-            // 
-            this.Clock.Enabled = true;
-            this.Clock.Interval = 1000;
-            this.Clock.Tick += new System.EventHandler(this.Clock_Tick);
             // 
             // TabSelected
             // 
@@ -50,6 +42,7 @@
             // 
             // tabControl1
             // 
+            this.tabControl1.activeTab = "Help";
             this.tabControl1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.tabControl1.btnFont = new System.Drawing.Font("Segoe UI", 10F);
             this.tabControl1.btnForeground = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
@@ -86,7 +79,6 @@
             this.Name = "Form1";
             this.Text = "Simple Clock";
             this.TopMost = true;
-            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.tabControl1)).EndInit();
             this.ResumeLayout(false);
 
@@ -94,7 +86,6 @@
 
         #endregion
         private TabControl tabControl1;
-        private System.Windows.Forms.Timer Clock;
         private System.Windows.Forms.Label TabSelected;
     }
 }

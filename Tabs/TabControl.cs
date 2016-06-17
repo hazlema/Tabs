@@ -48,8 +48,21 @@ namespace Tabs {
         [Description("Tabs Collection"), Category("Tabs")]
         public string[] Tabs {
             get { return tabs; }
-            set { tabs = value;
-                  RenderTabs();
+            set {
+                tabs = value;
+                RenderTabs();
+            }
+        }
+
+        private string activetab = "";
+        [Description("Tabs Collection"), Category("Tabs")]
+        public string activeTab {
+            get {
+                Select(this.activetab);
+                return activetab; }
+            set {
+                activetab = value;
+                Select(this.activetab);
             }
         }
 
@@ -134,11 +147,11 @@ namespace Tabs {
         private void RenderTabs() {
             Controls.Clear();
             foreach (string tabs in Tabs) Add(tabs);
+            Select(activetab);
         }
 
         // Add the stylish line
         private void TabControl_Paint(object sender, PaintEventArgs e) {
-                
             e.Graphics.DrawRectangle(new Pen(LineColor, 1), 
                 new Rectangle(0, this.Height - 1, this.Width, this.Height));
         }
